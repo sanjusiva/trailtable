@@ -1,0 +1,67 @@
+<p>table works!</p>
+<p-toolbar>
+    <ng-template pTemplate="left">
+        <button pButton pRipple lable="Add New" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="addNew()"></button> &nbsp; Add new Product
+    </ng-template>
+</p-toolbar>
+<p-table [value]="tables" [columns]="cols" [paginator]="true" [rows]="rowCount" [showCurrentPageReport]="true">
+    <ng-template pTemplate="header" let-column>
+        <tr>
+            <th *ngFor="let col of column">{{col.field}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-table let-column="columns">
+        <tr>
+            <td *ngFor="let col of column">{{isNumber(table[col.field]) ? (table[col.field]|json) : table[col.field] }}</td>
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editField(table,table.id)"></button>&nbsp;
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- <p-dialog [(visible)]="tableDialog" [style]="{width:'450px'}" header="Product Details" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="id">ID</label>
+            <input type="text" pInputText id="id" [(ngModel)]="tableEdit.id"/>
+        </div>
+        <div class="p-field">
+            <label for="repairRequestId">repairRequestId</label>
+            <input type="text" pInputText id="repairRequestId" [(ngModel)]="tableEdit.repairRequestId"/>
+        </div>
+        <div class="p-field">
+            <label for="productId">productId</label>
+            <input type="text" pInputText id="productId" [(ngModel)]="tableEdit.productId"/>
+        </div>
+        <div class="p-field">
+            <label for="orderId">orderId</label>
+            <input type="text" pInputText id="orderId" [(ngModel)]="tableEdit.orderId"/>
+        </div>
+        <div class="p-field">
+            <label for="productData">productData</label>
+            <input type="text" pInputText id="productData" ngModel={{tableEdit.productData|json}}/>
+        </div>
+        <div class="p-field">
+            <label for="userId">userId</label>
+            <input type="text" pInputText id="userId" [(ngModel)]="tableEdit.userId"/>
+        </div>
+        <div class="p-field">
+            <label for="status">status</label>
+            <input type="text" pInputText id="status" [(ngModel)]="tableEdit.status"/>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    </ng-template>
+
+</p-dialog> -->
+
+<p-dialog [(visible)]="tableDialog" [style]="{width:'450px'}" header="Product Details" styleClass="p-fluid">
+<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <!-- {{tableEdit?tableEdit.id:''}} -->
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</p-dialog>
